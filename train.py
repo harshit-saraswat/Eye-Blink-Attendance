@@ -12,7 +12,7 @@ class TrainImages(object):
             print("WARNING: Train_Images directory not found. Process may fail, create Train_Images Directory to continue.")
             print("-----------------------------------------------------------------------------------------------------------------------------------")
     
-    #Function to create face encodings for duplicity
+    # Function to create face encodings for duplicity
     def create_encodings(self,img):
         rgb_small_frame=img
         face_locations = face_recognition.face_locations(rgb_small_frame)
@@ -23,20 +23,20 @@ class TrainImages(object):
         face_encoding = face_recognition.face_encodings(rgb_small_frame, face_locations)[0]
         return face_encoding
 
-    #Function to save encodings as a pickle file
+    # Function to save encodings as a pickle file
     def save_encodings(self,encs,names):
         data=[]
         d = [{"name": nm, "encoding": enc} for (nm, enc) in zip(names, encs)]
         data.extend(d)
         encodingsFile = self.ENCODINGS_PATH
         
-        # dump the facial encodings data to disk
         print("INFO: Serializing Encodings")
         f = open(encodingsFile, "wb")
         f.write(pickle.dumps(data))
         f.close()   
         print("INFO: Training Completed for {} users.".format(len(names))) 
 
+    # Function to train model for images stored in Train Path
     def train_images(self):
         if not len(os.listdir(self.TRAIN_PATH)):
             print("ERROR: No Images found. Please put images in Train_Images folder.")
